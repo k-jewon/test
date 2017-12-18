@@ -94,7 +94,11 @@ public class UserInfoServiceImpl implements UserInfoService {
 		
 		// 데이터베이스로부터 현재 사용자의 암호화된 비밀번호를 가져온다.
 		UserInfo item = userInfoDao.selectByEmail(email);
-		return encoder.matches(rawPassword, item.getPassword());
+		if (item != null) {
+			return encoder.matches(rawPassword, item.getPassword());
+		}
+		
+		return false;
 	}
 
 	@Override
